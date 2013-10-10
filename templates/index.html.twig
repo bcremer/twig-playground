@@ -1,0 +1,66 @@
+{% use 'default/blocks.default.twig' %}
+{% use 'plugin/blocks.plugin.twig' %}
+{% use 'template/blocks.template.twig' %}
+
+<html>
+<style type="text/css">
+    #header {
+        border: 1px black solid;
+    }
+
+    #body {
+        border: 1px green solid;
+    }
+
+    #footer {
+        border: 1px blue solid;
+    }
+
+    div.spacer {
+        margin: 10px;
+        padding: 5px;
+    }
+
+    div.desc {
+        color: #999
+    }
+</style>
+<body>
+{% block container %}
+
+    {% block header_outer %}
+        <div id="header" class="spacer">
+            <div class="desc">
+                <i>header.template.twig</i> is overwriting nested block defined in <i>header.plugin.twig</i>
+            </div>
+            index header
+            {{ include('header') }}
+        </div>
+    {% endblock %}
+
+    {% block body_outer %}
+        <div id="body" class="spacer">{% block body %}index body{% endblock %}</div>
+    {% endblock %}
+
+    {% block footer %}
+        <div id="footer" class="spacer">
+            <div class="desc">
+                Include call where none of the 3 possible templates are existing
+            </div>
+            index footer
+            {{ include('footer', ignore_missing = true) }}
+        </div>
+    {% endblock %}
+
+    <div class="spacer">
+        <div class="desc">
+            This block is extended by <i>superextended.plugin.twig</i> and <i>superextended.template.twig</i> templates:
+        </div>
+        <div>
+            {{ include('superextended') }}
+        </div>
+    </div>
+
+{% endblock %}
+</body>
+</html>
